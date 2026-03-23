@@ -40,20 +40,27 @@ Run:
 python3 scripts/omikuji_l402.py --agent-id <agentId> --max-cost 10
 ```
 
+Sensitive values (`probe_token`, `invoice`, `payment_preimage`) are hidden by default. Add `--show-sensitive` only for local debugging.
+
 Environment overrides:
 - `LND_REST_URL`
 - `LND_TLS_CERT`
 - `LND_MACAROON_FILE`
 
+Avoid `--insecure` outside local troubleshooting. Prefer verified TLS in normal use.
+
 ## Output
 The script prints JSON containing:
-- `probe_token`
 - `challenge_amount_sat`
 - `payment.status`
 - `payment.payment_hash`
-- `payment.payment_preimage`
 - `omikuji.result`
 - `omikuji.receipt.verify_token`
+
+Only when `--show-sensitive` is set:
+- `probe_token`
+- `invoice`
+- `payment.payment_preimage`
 
 ## Resources
 - Protocol summary: `references/flow.md`

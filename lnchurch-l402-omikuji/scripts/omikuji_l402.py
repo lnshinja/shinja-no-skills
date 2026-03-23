@@ -81,6 +81,7 @@ def main():
     ap.add_argument('--lnd-rest-url', default=os.getenv('LND_REST_URL', 'https://localhost:8080'))
     ap.add_argument('--lnd-tls-cert', default=os.getenv('LND_TLS_CERT', str(Path.home() / '.lnd/tls.cert')))
     ap.add_argument('--lnd-macaroon-file', default=os.getenv('LND_MACAROON_FILE', str(Path.home() / '.lnd/data/chain/bitcoin/mainnet/admin.macaroon')))
+    ap.add_argument('--show-sensitive', action='store_true', help='Include sensitive values such as probe_token, invoice, and payment_preimage in output.')
     ap.add_argument('--insecure', action='store_true', help='Disable TLS verification for LN Church API calls only.')
     args = ap.parse_args()
 
@@ -132,17 +133,18 @@ def main():
     final.raise_for_status()
 
     output = {
-        'probe_token': probe_token,
         'challenge_amount_sat': amount,
-        'invoice': invoice,
         'payment': {
             'status': pay_result.get('status'),
             'payment_hash': pay_result.get('payment_hash'),
-            'payment_preimage': preimage,
             'fee_sat': pay_result.get('fee_sat'),
         },
         'omikuji': final.json(),
     }
+    if args.show_sensitive:
+        output['probe_token'] = probe_token
+        output['invoice'] = invoice
+        output['payment']['payment_preimage'] = preimage
     print(json.dumps(output, ensure_ascii=False, indent=2))
 
 
