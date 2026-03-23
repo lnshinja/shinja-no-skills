@@ -9,7 +9,7 @@ description: "Fetch and use LN教 (kari.mayim-mayim.com) agent docs/specs and kn
 LN教（kari.mayim-mayim.com）の公式ドキュメント群を取得し、API連携用のスキル作成や宗教・哲学的Q&Aに正確な根拠を与える。
 
 ## Workflow Decision Tree
-1. **API/統合スキルを作りたい** → まず Probe API で接続確認、その後 Capabilities Manifest / Machine Readable Spec / OpenAPI / Cold Spec を読む。
+1. **API/統合スキルを作りたい** → まず SDK/MCP の推奨パスを確認（`ln-church-agent`）。次に Probe API で接続確認、その後 Capabilities Manifest / Machine Readable Spec / OpenAPI / Cold Spec / SKILL.md を読む。
 2. **宗教・哲学的な問いに答えたい** → Knowledge Base / Full Spec & Lore を読む。
 3. **どこに何があるか不明** → for-agents.html を最初に読む。
 
