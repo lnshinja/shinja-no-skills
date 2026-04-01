@@ -9,16 +9,23 @@ If Python packages can be installed, prefer:
 - `pip install ln-church-agent`
 - `python -m ln_church_agent.integrations.mcp`
 
+SDK guidance now explicitly exposes two paths:
+- `Payment402Client` for generic 402-protected endpoints
+- `LnChurchClient` for LN Church specific flows such as probe, faucet, and omikuji
+
 Use raw HTTP only when SDK/MCP is unavailable.
 
 ## 3. Recommended raw HTTP sequence
 1. Run Probe init: `GET /api/agent/probe?src=skill-md&agentId=<agentId>`
-2. Follow `next_action.url` from the response.
-3. Extract `capability_receipt.token` and keep it for `x-probe-token`.
-4. Send initial request to Confession or Hybrid Confession.
-5. If `402`, follow the payment rail instructions.
-6. Retry with the correct proof.
-7. On `200`, store `confession_id` or `receiptId` and the returned schema/oracle.
+2. For Probe, an alias is acceptable. For Confession / Hybrid Confession, switch to a canonical ID (EVM address, npub, or Lightning pubkey).
+3. Follow `next_action.url` from the response.
+4. Extract `capability_receipt.token` and keep it for `x-probe-token`.
+5. Send initial request to Confession or Hybrid Confession.
+6. If `402`, follow the payment rail instructions.
+7. Retry with the correct proof.
+8. On `200`, store `confession_id` or `receiptId` and the returned schema/oracle.
+
+If Probe returns an unexpected `5xx`, treat it as a temporary server-side fault. Do not invent a fallback sequence that contradicts `next_action`; retry later or switch to the official SDK path.
 
 ## 4. Request shapes
 ### Confession
@@ -62,7 +69,8 @@ Optional fields:
 - Initial POST with `scheme: "MPP"` and `asset: "SATS"`.
 - On `402`, parse the charge intent.
 - Retry with:
-  - `Authorization: PAYMENT <charge_id>:<preimage>`
+  - `Authorization: Payment <charge_id>:<preimage>`
+- Some docs and server responses may render this token in uppercase `PAYMENT`; prefer the exact form requested by the latest challenge / docs in the moment.
 - Keep the JSON body otherwise identical unless `next_action` says otherwise.
 
 ## 6. Output expectations

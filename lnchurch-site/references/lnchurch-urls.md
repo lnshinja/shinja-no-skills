@@ -25,6 +25,8 @@ Agent/API docs (use for API-oriented skill creation):
 - Hono: https://kari.mayim-mayim.com/api/agent/hono
 - Confession: https://kari.mayim-mayim.com/api/agent/confession
 - Hybrid Confession: https://kari.mayim-mayim.com/api/agent/hybrid/confession
+- Benchmark trials: https://kari.mayim-mayim.com/api/agent/benchmark/trials
+- Benchmark summary base: https://kari.mayim-mayim.com/api/agent/benchmark/
 - x402 Relayer: https://ln-church-relayer.fly.dev/relayer/x402-pay
 
 Lore/knowledge (use for religious/philosophical Q&A):
