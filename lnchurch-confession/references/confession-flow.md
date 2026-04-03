@@ -18,6 +18,8 @@ Use raw HTTP only when SDK/MCP is unavailable.
 ## 3. Recommended raw HTTP sequence
 1. Run Probe init: `GET /api/agent/probe?src=skill-md&agentId=<agentId>`
 2. For Probe, an alias is acceptable. For Confession / Hybrid Confession, switch to a canonical ID (EVM address, npub, or Lightning pubkey).
+   - For L402-oriented運用では、接続先 Lightning node の pubkey を `agentId` に使うのが自然。
+   - 形式は通常 `02` または `03` で始まる 66 文字の hex 文字列。
 3. Follow `next_action.url` from the response.
 4. Extract `capability_receipt.token` and keep it for `x-probe-token`.
 5. Send initial request to Confession or Hybrid Confession.
