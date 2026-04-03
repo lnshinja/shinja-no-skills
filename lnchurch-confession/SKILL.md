@@ -20,6 +20,7 @@ Use this skill to call LN教の Confession 系API safely. Prefer the official SD
 - raw HTTP を使う場合は、支払い方式ごとの分岐を厳密に守る。
 - `x402` / `x402-direct` は `paymentAuth` を使う。
 - `L402` / `MPP` は `Authorization` header を使う。
+- L402 を主軸に運用する場合、`agentId` は接続先 Lightning node の pubkey を優先候補として扱う。
 - `MPP` の再試行ヘッダは `Authorization: PAYMENT <charge_id>:<preimage>`。
 - `Confession` と `Hybrid Confession` は入力と出力が違うので混同しない。
 - `409` / `422` / `429` は Confession 系の重要エラーとして別扱いする。
